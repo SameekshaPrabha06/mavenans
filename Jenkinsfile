@@ -17,7 +17,7 @@ pipeline{
 			}
 		}
 		
-		stage{'archive') {
+		stage('archive') {
 			steps{
 				archiveArtifacts artifacts : '/target/*.war' , fingerprint : true
 			}
