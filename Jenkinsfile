@@ -2,29 +2,30 @@ pipeline{
 	agent any
 	
 	tools{
-		maven :'Maven'
+		maven 'Maven'
 	}
 	stages{
-		stage('checkout')(
+		stage('checkout') {
 			steps{
 				git branch:'master',url:'https://github.com/SameekshaPrabha06/mavenans.git'
 			}
+		}
 			
-		stage('build'){
+		stage('build') {
 			steps{
 				sh 'mvn clean package'
 			}
 		}
 		
-		stage{'archive'){
+		stage{'archive') {
 			steps{
-				archiveArtifacts artifacts : '/target/*.war , fingerprint : true
+				archiveArtifacts artifacts : '/target/*.war' , fingerprint : true
 			}
 		}
 		
 		stage('deploy'){
 			steps{
-				sh 'ansible-playbook ansible/playbook.yml -i ansible.hosts.ini'
+				sh 'ansible-playbook ansible/playbook.yml -i ansible/hosts.ini'
 			}
 		}
 	}
